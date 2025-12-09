@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Novo Cadastro</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+<body onload="checkLogin();">
 
+<nav>
+  <button onclick="window.location='dashboard.html'">⬅ Voltar</button>
+</nav>
+
+<div class="container">
+<h2>Cadastro 2026</h2>
+
+<form id="formCadastro" onsubmit="salvarCadastro(); return false;">
+
+<h3>INFORMAÇÕES INICIAIS</h3>
+<label>Status*</label>
+<select name="status" required>
+<option>ATIVO</option><option>INTERINO</option><option>TRANSFERÊNCIA</option>
+</select>
+
+<label>Descrição*</label>
+<select name="descricao" required>
+<option>ADOLESCENTE</option><option>LÍDER</option><option>ADOLESCENTE+LÍDER</option>
+</select>
+
+<label>Cargo*</label>
+<select name="cargo" required>
+<option>MEMBRO DO CORAL</option><option>REGENTE</option><option>MÍDIA</option>
+<option>ACOLHIMENTO</option><option>TESOURARIO(A)</option>
+<option>SECRETÁRIO(A)</option><option>DIREÇÃO</option>
+</select>
+
+<label>Congregação*</label>
+<select name="congregacao" required>
+<option>NOVA SALÉM</option><option>ÉBENEZER</option><option>FILADÉLFIA</option>
+<option>MONTE BASÃ</option><option>JEOVAH RAFAH</option><option>REFÚGIO FORTE</option>
+</select>
+
+<hr><h3>INFORMAÇÕES PESSOAIS</h3>
+<label>Nome Completo*</label><input type="text" name="nome" required>
+
+<label>Data de Nascimento*</label>
+<input type="text" name="nascimento" placeholder="DD/MM/AAAA" required>
+
+<label>Sexo*</label>
+<select name="sexo" required><option>MASCULINO</option><option>FEMININO</option></select>
+
+<label>Foto</label><input type="file" name="foto" accept="image/*">
+
+<label>Contato</label>
+<input type="text" name="contato" placeholder="(XX) 9 XXXX-XXXX">
+
+<hr><h3>ENDEREÇO</h3>
+<input type="text" name="rua" placeholder="Nome da Rua">
+<input type="text" name="numero" placeholder="Número da Casa">
+
+<label>Bairro</label>
+<select name="bairro">
+<option>NOVA REPÚBLICA</option><option>VITÓRIA RÉGIA</option><option>SÃO FRANCISCO</option>
+<option>SANTO ANDRÉ</option><option>BELA VISTA</option>
+<option>IPANEMA</option><option>MATINHA</option><option>OUTROS</option>
+</select>
+
+<hr><h3>INFORMAÇÕES ESCOLARES</h3>
+<label>Série*</label>
+<select name="serie" required>
+<option>NÃO ESTUDA</option><option>4º ANO</option><option>5º ANO</option><option>6º ANO</option>
+<option>7º ANO</option><option>8º ANO</option><option>9º ANO</option>
+<option>1º ANO/MÉDIO</option><option>2º ANO/MÉDIO</option>
+<option>3º ANO/MÉDIO</option><option>SUPERIOR</option>
+</select>
+
+<label>Turno*</label>
+<select name="turno" required>
+<option>NÃO SE APLICA</option><option>MANHÃ</option><option>TARDE</option><option>NOITE</option>
+</select>
+
+<hr><h3>RESPONSÁVEL</h3>
+<input type="text" name="responsavel" placeholder="Nome do responsável">
+
+<label>Parentesco*</label>
+<select name="parentesco" required>
+<option>INDEPENDENTE</option><option>MÃE</option><option>PAI</option><option>AVÓ/AVÔ</option>
+<option>TIA/TIO</option><option>OUTRO</option>
+</select>
+
+<input type="text" name="telresponsavel" placeholder="(XX) 9 XXXX-XXXX">
+
+<hr><h3>INFORMAÇÕES COMPLEMENTARES</h3>
+
+<label>Batizado nas águas?*</label>
+<select name="batismo" required><option>SIM</option><option>NÃO</option></select>
+
+<label>Batismo Espírito Santo?*</label>
+<select name="espirito" required><option>SIM</option><option>NÃO</option></select>
+
+<label>E.B.D?*</label>
+<select name="ebd" required><option>SIM</option><option>NÃO</option></select>
+
+<label>Ensino Bíblico no Lar?*</label>
+<select name="ensino" required><option>SIM</option><option>NÃO</option></select>
+
+<label>Tem Bíblia?*</label>
+<select name="tembiblia" required><option>SIM</option><option>NÃO</option></select>
+
+<label>Tem Harpa?*</label>
+<select name="temharpa" required><option>SIM</option><option>NÃO</option></select>
+
+<button type="submit">Salvar</button>
+
+</form>
+</div>
+</body>
+</html>
