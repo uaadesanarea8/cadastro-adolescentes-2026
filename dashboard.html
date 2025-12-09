@@ -4,20 +4,21 @@
 <meta charset="UTF-8">
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
 </head>
-<body>
-<header>
-    <h2>Cadastro de Líderes e Adolescentes 2026</h2>
-    <button onclick="logout()">Sair</button>
-</header>
+<body onload="checkLogin(); carregarLista();">
 
-<div class="dashboard">
-    <button onclick="location.href='cadastro.html'">➕ Novo Cadastro</button>
-    <button onclick="listarCadastros()">📄 Ver Cadastros</button>
+<nav>
+  <h2>Sistema 2026</h2>
+  <button onclick="logout()">Sair</button>
+</nav>
+
+<div class="container">
+  <h3>Cadastros Recentes</h3>
+  <button onclick="window.location='cadastro.html'">+ Novo Cadastro</button>
+
+  <ul id="listaCadastros"></ul>
 </div>
 
-<div id="listaCadastros"></div>
-
-<script src="script.js"></script>
 </body>
 </html>
