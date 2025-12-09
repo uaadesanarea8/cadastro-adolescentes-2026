@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h2>Cadastro de Líderes e Adolescentes 2026</h2>
+    <button onclick="logout()">Sair</button>
+</header>
 
+<div class="dashboard">
+    <button onclick="location.href='cadastro.html'">➕ Novo Cadastro</button>
+    <button onclick="listarCadastros()">📄 Ver Cadastros</button>
+</div>
+
+<div id="listaCadastros"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
