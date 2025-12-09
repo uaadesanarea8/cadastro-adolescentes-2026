@@ -191,47 +191,93 @@ if(window.location.href.includes("cadastro.html?edit=")){
     }
 }
 
-// ----- DITAR DADOS ----- //
+let editIndex = null; // controla se está editando
 
-let editIndex = null; // controla se é edição ou novo cadastro
+// Carregar registros do localStorage
+function carregarRegistros() {
+    tabela.innerHTML = "";
+    let dados = JSON.parse(localStorage.getItem("registros")) || [];
 
-function editarCadastro(index) {
-    const cadastros = JSON.parse(localStorage.getItem("cadastros")) || [];
-    const c = cadastros[index];
-
-    // Preenche o formulário com os dados selecionados
-    document.getElementById("descricao").value = c.descricao;
-    document.getElementById("cargo").value = c.cargo;
-    document.getElementById("nome").value = c.nome;
-    document.getElementById("telefone").value = c.telefone;
-    document.getElementById("email").value = c.email;
-
-    document.getElementById("modalTitulo").innerText = "Editar Cadastro";
-    document.getElementById("modal").style.display = "flex";
-
-    editIndex = index; // marca que estamos editando
+    dados.forEach((item, index) => {
+        let row = `<tr>
+            <td>${item.tipo}</td>
+            <td>${item.cargo}</td>
+            <td>${item.nome}</td>
+            <td>${item.nascimento}</td>
+            <td>${item.telefone}</td>
+            <td>${item.email}</td>
+            <td>${item.endereco}</td>
+            <td>
+                <button onclick="editar(${index})">✏ Editar</button>
+                <button onclick="excluir(${index})">🗑 Excluir</button>
+            </td>
+        </tr>`;
+        tabela.innerHTML += row;
+    });
 }
 
-// 🔥 Agora o mesmo botão Salvar serve para criar e editar
-function salvarCadastro() {
-    const cadastros = JSON.parse(localStorage.getItem("cadastros")) || [];
+function cadastrar() {
+    let dados = JSON.parse(localStorage.getItem("registros")) || [];
 
-    const novo = {
-        descricao: document.getElementById("descricao").value,
-        cargo: document.getElementById("cargo").value,
-        nome: document.getElementById("nome").value,
-        telefone: document.getElementById("telefone").value,
-        email: document.getElementById("email").value,
+    let registro = {
+        tipo: tipo.value,
+        cargo: cargo.value,
+        nome: nome.value,
+        nascimento: nascimento.value,
+        telefone: telefone.value,
+        email: email.value,
+        endereco: endereco.value
     };
 
+    // MODO EDIÇÃO
     if (editIndex !== null) {
-        cadastros[editIndex] = novo; // substitui existente
+        if(confirm("Deseja realmente salvar as alterações?")){
+            dados[editIndex] = registro;
+            localStorage.setItem("registros", JSON.stringify(dados));
+            alert("Alteração salva com sucesso!");
+        }
         editIndex = null;
-    } else {
-        cadastros.push(novo); // novo cadastro normal
+
+        btnCadastrar.textContent = "Cadastrar"; // restaura
+        form.reset();
+        carregarRegistros();
+        return;
     }
 
-    localStorage.setItem("cadastros", JSON.stringify(cadastros));
-    listarCadastros();
-    fecharModal();
+    // CADASTRO NORMAL
+    dados.push(registro);
+    localStorage.setItem("registros", JSON.stringify(dados));
+    alert("Cadastro realizado!");
+    form.reset();
+    carregarRegistros();
 }
+
+// Função para editar
+function editar(index) {
+    let dados = JSON.parse(localStorage.getItem("registros")) || [];
+    let item = dados[index];
+
+    tipo.value = item.tipo;
+    cargo.value = item.cargo;
+    nome.value = item.nome;
+    nascimento.value = item.nascimento;
+    telefone.value = item.telefone;
+    email.value = item.email;
+    endereco.value = item.endereco;
+
+    editIndex = index;
+
+    btnCadastrar.textContent = "Salvar Alterações";
+    window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// Função excluir
+function excluir(index) {
+    if(confirm("Tem certeza que deseja excluir?")){
+        let dados = JSON.parse(localStorage.getItem("registros")) || [];
+        dados.splice(index,1);
+        localStorage.setItem("registros", JSON.stringify(dados));
+        carregarRegistros();
+    }
+}
+carregarRegistros();
