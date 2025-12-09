@@ -14,8 +14,35 @@
 </nav>
 
 <div class="container">
-  <h3>Cadastros Recentes</h3>
+  <h3>Cadastros</h3>
+
+  <input type="text" id="busca" placeholder="Buscar por nome..." onkeyup="carregarLista()">
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;">
+    <select id="filtroDescricao" onchange="carregarLista()">
+      <option value="">Descrição</option>
+      <option>ADOLESCENTE</option>
+      <option>LÍDER</option>
+      <option>ADOLESCENTE+LÍDER</option>
+    </select>
+
+    <select id="filtroCargo" onchange="carregarLista()">
+      <option value="">Cargo</option>
+      <option>MEMBRO DO CORAL</option><option>REGENTE</option>
+      <option>MÍDIA</option><option>ACOLHIMENTO</option>
+      <option>TESOURARIO(A)</option><option>SECRETÁRIO(A)</option>
+      <option>DIREÇÃO</option>
+    </select>
+
+    <select id="filtroCong" onchange="carregarLista()">
+      <option value="">Congregação</option>
+      <option>NOVA SALÉM</option><option>ÉBENEZER</option><option>FILADÉLFIA</option>
+      <option>MONTE BASÃ</option><option>JEOVAH RAFAH</option><option>REFÚGIO FORTE</option>
+    </select>
+  </div>
+
   <button onclick="window.location='cadastro.html'">+ Novo Cadastro</button>
+  <button onclick="window.print()">🖨 Imprimir Lista</button>
 
   <ul id="listaCadastros"></ul>
 </div>
