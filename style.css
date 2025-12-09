@@ -1,1 +1,6 @@
-
+body{font-family:Arial;background:#f5f5f5;margin:0}
+.container{max-width:700px;margin:auto;background:white;padding:20px;border-radius:10px}
+input,select{width:100%;padding:8px;margin:5px 0}
+button{padding:10px 15px;margin-top:10px;cursor:pointer}
+nav{background:#222;color:#fff;padding:10px;display:flex;justify-content:space-between}
+.login-container{width:300px;margin:200px auto;text-align:center}
