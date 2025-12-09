@@ -1,1 +1,127 @@
+// -------- LOGIN -------- //
+function login(){
+    let user = document.getElementById("user").value;
+    let pass = document.getElementById("pass").value;
 
+    if(user === "admin" && pass === "admin"){
+        localStorage.setItem("logado", "true");
+        window.location = "dashboard.html";
+    } else {
+        alert("Usuário ou senha incorretos.");
+    }
+}
+
+function checkLogin(){
+    if(localStorage.getItem("logado") != "true"){
+        window.location = "index.html";
+    }
+}
+
+function logout(){
+    localStorage.removeItem("logado");
+    window.location = "index.html";
+}
+
+
+// -------- BANCO DE DADOS -------- //
+function salvarCadastro(){
+    const form = document.getElementById("formCadastro");
+    const dados = new FormData(form);
+
+    let fotoBase64 = "";
+    const foto = dados.get("foto");
+
+    // Se tiver imagem, converter para Base64
+    if(foto && foto.size > 0){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            fotoBase64 = e.target.result;
+            salvarFinal();
+        };
+        reader.readAsDataURL(foto);
+    } else {
+        salvarFinal();
+    }
+
+    function salvarFinal(){
+        let cadastro = {};
+        dados.forEach((v,k)=>cadastro[k]=v);
+        cadastro.id = Date.now();
+        cadastro.foto = fotoBase64;
+
+        let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+        lista.push(cadastro);
+        localStorage.setItem("cadastros", JSON.stringify(lista));
+
+        alert("Cadastro salvo com sucesso!");
+        window.location = "dashboard.html";
+    }
+}
+
+
+
+// -------- CARREGAR LISTA NO DASHBOARD -------- //
+function carregarLista(){
+    let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+    const ul = document.getElementById("listaCadastros");
+
+    ul.innerHTML = "";
+
+    lista.slice().reverse().forEach(p=>{
+        ul.innerHTML += `
+            <li style="margin:8px 0; list-style:none;">
+                <b>${p.nome}</b> - ${p.descricao}  
+                <button onclick="abrir(${p.id})">Ver</button>
+            </li>
+        `;
+    });
+}
+
+function abrir(id){
+    localStorage.setItem("ver", id);
+    window.location = "ver.html";
+}
+
+
+
+// -------- VISUALIZAR CADASTRO -------- //
+function verCadastro(){
+    let id = localStorage.getItem("ver");
+    let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+    let p = lista.find(x=>x.id == id);
+
+    if(!p){
+        document.getElementById("dados").innerHTML = "<p>Cadastro não encontrado!</p>";
+        return;
+    }
+
+    document.getElementById("dados").innerHTML = `
+        <h2>${p.nome}</h2>
+        ${p.foto ? `<img src="${p.foto}" width="150">` : "<i>Sem foto</i>"}
+        <br><br>
+        <p><b>Status:</b> ${p.status}</p>
+        <p><b>Descrição:</b> ${p.descricao}</p>
+        <p><b>Cargo:</b> ${p.cargo}</p>
+        <p><b>Congregação:</b> ${p.congregacao}</p>
+        <p><b>Data de Nascimento:</b> ${p.nascimento}</p>
+        <p><b>Sexo:</b> ${p.sexo}</p>
+        <p><b>Contato:</b> ${p.contato}</p>
+
+        <h3>Endereço</h3>
+        <p>${p.rua}, nº ${p.numero}, ${p.bairro}</p>
+
+        <h3>Escolar</h3>
+        <p>Série: ${p.serie} | Turno: ${p.turno}</p>
+
+        <h3>Responsável</h3>
+        <p>${p.responsavel} - ${p.parentesco} - ${p.telresponsavel}</p>
+
+        <h3>Informações Complementares</h3>
+        <p>Batizado águas: ${p.batismo}</p>
+        <p>E. Santo: ${p.espirito}</p>
+        <p>EBD: ${p.ebd}</p>
+        <p>Ensino no Lar: ${p.ensino}</p>
+        <p>Tem Bíblia: ${p.tembiblia}</p>
+        <p>Tem Harpa: ${p.temharpa}</p>
+    `;
+}
