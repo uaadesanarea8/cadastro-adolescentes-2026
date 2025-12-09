@@ -89,7 +89,10 @@ function carregarLista(){
     });
 }
 
-
+function abrir(id){
+    localStorage.setItem("ver", id);
+    window.location = "ver.html";
+}
 
 // -------- VISUALIZAR CADASTRO -------- //
 function verCadastro(){
