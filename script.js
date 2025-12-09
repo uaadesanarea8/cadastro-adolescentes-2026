@@ -125,3 +125,58 @@ function verCadastro(){
         <p>Tem Harpa: ${p.temharpa}</p>
     `;
 }
+// ----- EXCLUIR CADASTRO ----- //
+function excluirCadastro(){
+    if(!confirm("Tem certeza que deseja excluir?")) return;
+
+    let id = localStorage.getItem("ver");
+    let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+    let nova = lista.filter(x=>x.id != id);
+
+    localStorage.setItem("cadastros", JSON.stringify(nova));
+    alert("Cadastro removido.");
+    window.location = "dashboard.html";
+}
+
+
+// ----- EDITAR CADASTRO ----- //
+function editarCadastro(){
+    window.location = "cadastro.html?edit=" + localStorage.getItem("ver");
+}
+
+
+// ----- CARREGAR FORMULÁRIO PARA EDIÇÃO ----- //
+if(window.location.href.includes("cadastro.html?edit=")){
+    window.onload = function(){
+        checkLogin();
+        let id = window.location.href.split("edit=")[1];
+        let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+        let p = lista.find(x=>x.id == id);
+
+        if(p){
+            const form = document.getElementById("formCadastro");
+            Object.keys(p).forEach(key=>{
+                if(form[key] && key!="foto"){
+                    form[key].value = p[key];
+                }
+            });
+
+            // Salvar edição
+            form.onsubmit = function(e){
+                e.preventDefault();
+
+                Object.keys(p).forEach(key=>{
+                    if(form[key]){
+                        p[key] = form[key].value;
+                    }
+                });
+
+                let nova = lista.map(x=> x.id==id ? p : x);
+                localStorage.setItem("cadastros", JSON.stringify(nova));
+
+                alert("Cadastro atualizado!");
+                window.location="ver.html";
+            }
+        }
+    }
+}
