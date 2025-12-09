@@ -190,3 +190,48 @@ if(window.location.href.includes("cadastro.html?edit=")){
         }
     }
 }
+
+// ----- DITAR DADOS ----- //
+
+let editIndex = null; // controla se é edição ou novo cadastro
+
+function editarCadastro(index) {
+    const cadastros = JSON.parse(localStorage.getItem("cadastros")) || [];
+    const c = cadastros[index];
+
+    // Preenche o formulário com os dados selecionados
+    document.getElementById("descricao").value = c.descricao;
+    document.getElementById("cargo").value = c.cargo;
+    document.getElementById("nome").value = c.nome;
+    document.getElementById("telefone").value = c.telefone;
+    document.getElementById("email").value = c.email;
+
+    document.getElementById("modalTitulo").innerText = "Editar Cadastro";
+    document.getElementById("modal").style.display = "flex";
+
+    editIndex = index; // marca que estamos editando
+}
+
+// 🔥 Agora o mesmo botão Salvar serve para criar e editar
+function salvarCadastro() {
+    const cadastros = JSON.parse(localStorage.getItem("cadastros")) || [];
+
+    const novo = {
+        descricao: document.getElementById("descricao").value,
+        cargo: document.getElementById("cargo").value,
+        nome: document.getElementById("nome").value,
+        telefone: document.getElementById("telefone").value,
+        email: document.getElementById("email").value,
+    };
+
+    if (editIndex !== null) {
+        cadastros[editIndex] = novo; // substitui existente
+        editIndex = null;
+    } else {
+        cadastros.push(novo); // novo cadastro normal
+    }
+
+    localStorage.setItem("cadastros", JSON.stringify(cadastros));
+    listarCadastros();
+    fecharModal();
+}
