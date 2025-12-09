@@ -63,23 +63,30 @@ function salvarCadastro(){
 // -------- CARREGAR LISTA NO DASHBOARD -------- //
 function carregarLista(){
     let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
-    const ul = document.getElementById("listaCadastros");
 
+    let busca = document.getElementById("busca")?.value.toLowerCase() || "";
+    let filtroDescricao = document.getElementById("filtroDescricao")?.value || "";
+    let filtroCargo = document.getElementById("filtroCargo")?.value || "";
+    let filtroCong = document.getElementById("filtroCong")?.value || "";
+
+    let filtrada = lista.filter(p => 
+        p.nome.toLowerCase().includes(busca) &&
+        (filtroDescricao=="" || p.descricao == filtroDescricao) &&
+        (filtroCargo=="" || p.cargo == filtroCargo) &&
+        (filtroCong=="" || p.congregacao == filtroCong)
+    );
+
+    const ul = document.getElementById("listaCadastros");
     ul.innerHTML = "";
 
-    lista.slice().reverse().forEach(p=>{
+    filtrada.reverse().forEach(p=>{
         ul.innerHTML += `
             <li style="margin:8px 0; list-style:none;">
-                <b>${p.nome}</b> - ${p.descricao}  
+                <b>${p.nome}</b> - ${p.descricao} | ${p.congregacao}
                 <button onclick="abrir(${p.id})">Ver</button>
             </li>
         `;
     });
-}
-
-function abrir(id){
-    localStorage.setItem("ver", id);
-    window.location = "ver.html";
 }
 
 
