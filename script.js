@@ -226,3 +226,4 @@ function exportarCSV(){
     link.download = "cadastros2026.csv";
     link.click();
 }
+
