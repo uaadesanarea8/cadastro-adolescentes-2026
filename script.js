@@ -190,3 +190,39 @@ if(window.location.href.includes("cadastro.html?edit=")){
         }
     }
 }
+
+// ===== EXPORTAR DADOS PARA CSV ===== //
+function exportarCSV(){
+    let lista = JSON.parse(localStorage.getItem("cadastros") || "[]");
+
+    // aplica os filtros buscados na tela
+    let busca = document.getElementById("busca")?.value.toLowerCase() || "";
+    let filtroDescricao = document.getElementById("filtroDescricao")?.value || "";
+    let filtroCargo = document.getElementById("filtroCargo")?.value || "";
+    let filtroCong = document.getElementById("filtroCong")?.value || "";
+
+    let filtrada = lista.filter(p => 
+        p.nome.toLowerCase().includes(busca) &&
+        (filtroDescricao=="" || p.descricao == filtroDescricao) &&
+        (filtroCargo=="" || p.cargo == filtroCargo) &&
+        (filtroCong=="" || p.congregacao == filtroCong)
+    );
+
+    if(filtrada.length === 0){
+        alert("Nenhum dado encontrado para exportar.");
+        return;
+    }
+
+    let campos = Object.keys(filtrada[0]);
+    let csv = campos.join(",") + "\n";
+
+    filtrada.forEach(item=>{
+        csv += campos.map(c=> `"${(item[c]||"").toString().replace(/"/g,'""')}"`).join(",") + "\n";
+    });
+
+    let blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "cadastros2026.csv";
+    link.click();
+}
