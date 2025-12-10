@@ -7,11 +7,6 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d6efd">
 </head>
-    <script>
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
 <body>
 
 <div class="login-container">
@@ -23,5 +18,10 @@ if("serviceWorker" in navigator){
 </div>
 
 <script src="script.js"></script>
+<script>
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
 </body>
 </html>
