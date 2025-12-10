@@ -91,3 +91,72 @@ h3{
 #dados h2{margin-bottom:10px;}
 
 div{text-align:left;}
+
+* Ajuste geral para telas menores */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove limites fixos, deixando fluido */
+.container, form, .card, .lista {
+  width: 100%;
+  max-width: 700px;    /* tamanho máximo em PC */
+  margin: auto;
+  padding: 15px;
+}
+
+/* Campos do formulário */
+form input, form select, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+/* Dashboard */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+/* Foto */
+.foto-preview {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  margin: 10px auto;
+  border-radius: 8px;
+}
+
+/* Botões em mobile */
+button, .btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+}
+
+/* Tabelas responsivas */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Breakpoints para telas pequenas */
+@media (max-width: 600px) {
+
+  h1, h2, h3 {
+    font-size: 22px;
+    text-align: center;
+  }
+  
+  .dashboard-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lista-table td, .lista-table th {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
